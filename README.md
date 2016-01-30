@@ -18,8 +18,6 @@ php-opcache ?
 php-xdebug ?
 blackfire profiler ?
 
-CI?
-
 ## Quality Assurance
 
 This role uses manual and automated testing to ensure the features offered by this role work as advertised. 

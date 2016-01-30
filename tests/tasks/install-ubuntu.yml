@@ -1,5 +1,5 @@
 ---
-# Tests PHP 5 is installed correctly
+# Tests PHP 5 is installed correctly - Ubuntu
 
 - name: determine if PHP packages are installed - Ubuntu
   command: dpkg -s php5-cli
