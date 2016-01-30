@@ -1,0 +1,16 @@
+---
+# Tests the PHP 5 is correctly installed by this role
+
+# Management and configuration checks
+# These checks mirror individual tasks to ensure they execute correctly
+# (I.e. that they create a user in the right package or create the correct config file)
+
+# Core configuration
+
+- include: install.yml
+
+# Functionality checks
+# These checks need to run after the package or service has been configured to ensure it is working correctly,
+# using an configuration that may have been set by this role.
+
+- include: test-php.yml

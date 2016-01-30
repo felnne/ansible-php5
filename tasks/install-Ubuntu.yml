@@ -1,0 +1,27 @@
+---
+# Install the PHP 5 language
+
+- name: install prerequisites for installing PPAs - Ubuntu
+  apt:
+                 pkg={{ item }}
+        update_cache=yes
+    cache_valid_time=3600
+               state=present
+  with_items:
+    - software-properties-common
+  when: BARC_use_non_system_package_sources == true or BARC_use_non_system_package_sources == 'True'
+
+- name: add PHP 5 PPA - Ubuntu
+  apt_repository:
+    repo='ppa:ondrej/php5-5.6'
+    state=present
+  when: BARC_use_non_system_package_sources == true or BARC_use_non_system_package_sources == 'True'
+
+- name: install PHP 5 - Ubuntu
+  apt:
+                 pkg={{ item }}
+        update_cache=yes
+    cache_valid_time=3600
+               state=present
+  with_items:
+    - php5-cli

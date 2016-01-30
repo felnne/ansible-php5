@@ -1,0 +1,9 @@
+---
+# These variables override those defined by roles
+
+# Generic
+project_hostname_project: "barc-php5"
+project_repository: "git@github.com:antarctica/ansible-php5.git"
+
+# BARC roles
+barc_role_name: php5

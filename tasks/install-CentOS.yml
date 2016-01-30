@@ -1,0 +1,34 @@
+---
+# Install the PHP 5 language
+
+# If using non-system sources (preferred)
+
+- name: install prerequisites for installing from non-system sources - CentOS
+  yum:
+                 pkg={{ item }}
+        update_cache=yes
+               state=present
+  with_items:
+    - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    - https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+  when: BARC_use_non_system_package_sources == true or BARC_use_non_system_package_sources == 'True'
+
+- name: install PHP 5 from non-system sources - CentOS
+  yum:
+             pkg={{ item }}
+    update_cache=yes
+           state=present
+  with_items:
+    - php56w
+  when: BARC_use_non_system_package_sources == true or BARC_use_non_system_package_sources == 'True'
+
+# If using system-sources only
+
+- name: install PHP 5 from system sources - CentOS
+  yum:
+                 pkg={{ item }}
+        update_cache=yes
+               state=present
+  with_items:
+    - php-5.4.16-36.el7_1
+  when: BARC_use_non_system_package_sources == false or BARC_use_non_system_package_sources == 'False'

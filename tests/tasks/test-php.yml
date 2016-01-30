@@ -1,0 +1,10 @@
+---
+# Tests if PHP can actually be used
+
+- name: get PHP version
+  command: php -v
+  register: php5_test_fact_php_version
+- name: assert PHP version is displayed and is at least version 5
+  assert:
+    that:
+      - "'PHP 5.' in php5_test_fact_php_version.stdout"

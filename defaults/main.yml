@@ -1,0 +1,5 @@
+---
+# Default variables - inventory or playbook overrides will be respected
+
+# BARC specific variables
+BARC_use_non_system_package_sources: true

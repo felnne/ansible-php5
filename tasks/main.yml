@@ -1,0 +1,7 @@
+---
+# tasks file for php5
+
+- include: install.yml
+  tags:
+    - BARC_INSTALL
+    - BARC_INSTALL_PACKAGES
