@@ -146,7 +146,6 @@ include options for:
 * Maximum execution time and memory limits
 * Default timezone - localised to *Europe/London*
 * Error reporting and logging
-* Disabling the *fopen* function
 * Concealing the PHP version for security purposes
 
 See the *php5_sapi_cli_options* variable in the role defaults file (`defaults/main.yml`) for the specific options set.

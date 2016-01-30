@@ -28,10 +28,6 @@ php5_sapi_cli_options:
     options:
       - option: date.timezone
         value: "Europe/London"
-  - section: "Fopen wrappers"
-    options:
-      - option: allow_url_fopen
-        value: "Off"
   - section: "PHP"
     options:
       - option: expose_php
