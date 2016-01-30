@@ -1,18 +1,18 @@
 ---
 # tasks file for php5
 
-- include: install.yml
+- include: install-php.yml
   tags:
     - BARC_INSTALL
     - BARC_INSTALL_PACKAGES
 
-- include: configure-php-cli-sapi.yml
 - include: install-ext-opcache.yml
   when: php5_use_opcache == true
   tags:
     - BARC_INSTALL
     - BARC_INSTALL_PACKAGES
 
+- include: configure-sapi-cli.yml
   tags:
     - BARC_CONFIGURE
     - BARC_CONFIGURE_PACKAGE
