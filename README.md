@@ -4,13 +4,14 @@ Master:
 
 Develop:
 
-Installs PHP 5
+Installs and configures PHP 5
 
 **Part of the BAS Ansible Role Collection (BARC)**
 
 ## Overview
 
 * Installs the latest stable version of PHP 5 from non-system, or optionally, from system only sources
+* Configures the PHP configuration file for the CLI SAPI using recommended settings to improve security
 
 # TODO (Remove)
 
@@ -46,8 +47,8 @@ available it will be used. Otherwise system packages will be used. Suitable non-
 maintainer, typically a company or well respected individual. Where non-system packages are used, the variable 
 *BARC_use_non_system_package_sources* can be set to `false` to always use system packages if this is needed.
 
-_This limitation is **NOT** considered to be significant. Solutions will **NOT** be actively pursued._ 
-_Pull requests addressing this limitation will be considered.*_
+*This limitation is **NOT** considered to be significant. Solutions will **NOT** be actively pursued.*
+*Pull requests addressing this limitation will be considered.*
 
 See [BARC-]() for further details.
 
@@ -58,6 +59,22 @@ a web-server if that is desired.
 
 See [this source](http://serverfault.com/questions/243297/how-do-you-install-php5-without-installing-apache-in-ubuntu) 
 for further details.
+
+*This limitation is considered to be significant. A workaround is in place to mitigate this limitation, pending a*
+*permanent resolution by Ubuntu. Pull requests addressing this limitation will be considered.*
+
+See [BARC-]() for further details.
+
+* On CentOS, the PHP configuration file is the same for all SAPIs
+
+CentOS uses a single configuration file, `/etc/php.ini`, for all SAPIs, there is no CLI SAPI specific configuration,
+unlike on Ubuntu.
+
+CentOS does support loading configuration files from a directory of configuration files, specifically, 
+`/etc/php.d/*.ini`, but these configuration files are included by the main configuration file, and so used by all SAPIs.
+
+*This limitation is considered to be significant. Solutions will be actively pursued. Pull requests to address this* 
+*will be gratefully considered and given priority.*
 
 See [BARC-]() for further details.
 
@@ -94,6 +111,46 @@ version of installed packages is variable.
 
 Note: On Ubuntu when using system packages only, the `php5-cli` package is selected rather than the `php5` package.
 This is considered a limitation, see the *limitations* section for more information.
+
+### PHP configuration files
+
+PHP uses a configuration file to set various options, such as which modules are enabled and how these are configured, 
+e.g. which time-zone to use.
+
+This configuration file uses the INI format, which consists of sections containing options with a value. In PHP this
+configuration file can be a single file (e.g. `php.ini`) and or a directory of files (e.g. `php.d/*.ini`).
+
+E.g. Core configuration options can be set in a main `php.ini` file, with module specific configuration contained in
+per-module configuration files included in the main configuration file.
+
+In addition, configuration options can be set on a per SAPI (Server API) basis. For example settings may differ between
+the `cli` SAPI (i.e. the Command Line) and the `apache` SAPI (i.e. a Web Server).
+
+The combination of these various configuration options differ by Operating System, and package used to install PHP.
+This variation is considered a limitation, see the *limitations* section for more information.
+
+This role, which configures the `cli` SAPI only, will only configure options relevant to the `cli` SAPI specifically 
+(such as a longer execution time). However, on CentOS there is no configuration file limited to the `cli` SAPI, and 
+the options set by this role therefore apply to *all* SAPIs. This is considered a limitation, see the *limitations* 
+section for more information.
+
+Settings for other SAPIs, such as web-servers, **SHOULD** be set in other roles, or project/purpose specific playbooks.
+The tasks used in this role can be used as a template for setting additional options. Providing the Ansible INI module
+is used, setting additional INI options will not cause conflicts with this role and so preserve idempotency.
+
+The configuration options set by this role are considered suitably generic and applicable to all situations such that 
+they are safe to be used as defaults - however it is accepted there are situations they would not be suitable. They 
+include options for:
+
+* Maximum execution time and memory limits
+* Default timezone - localised to *Europe/London*
+* Error reporting and logging
+* Disabling the *fopen* function
+* Concealing the PHP version for security purposes
+
+See the *php5_sapi_cli_options* variable in the role defaults file (`defaults/main.yml`) for the specific options set.
+Where any of these options are unsuitable, override this variable with a copy of these defaults, omitting the unsuitable
+options.
 
 ### Typical playbook
 
@@ -132,6 +189,47 @@ This role uses the following tags, for various tasks:
 * Values **SHOULD NOT** be quoted to prevent Ansible coercing values to a string
 * Where not specified, a value of `true` will be assumed
 * Default: `true`
+
+#### *php5_sapi_cli_options*
+
+**MAY** be specified.
+Specifies configuration options for the CLI (Command Line) SAPI
+
+Note: On some Operating Systems, these options may apply beyond the scope of the CLI SAPI. See the *Limitations*
+section for more information
+
+Structured as a list of items, with each item having the following properties
+
+* *section*
+    * **MUST** be specified
+    * Specifies the section of the INI configuration file options for this item belong to
+    * Values **MUST** be valid section names as determined by the INI configuration format
+* *options*
+    * **MAY** be specified
+    * Specifies the list of options, and values, to be set within the section set by the *section* item
+    * Structured as a list of sub-items, with each sub-item having the following properties
+        * *option*
+            * **MUST** be specified if any part of the sub-item is specified
+            * Specifies the *option* of the INI option/value pair
+            * Values **MUST** be valid option names as determined by the configuration format and **MUST** be valid
+            option names by PHP
+        * *value*
+            * *MUST** be specified if any part of the sub-item is specified
+            * Specifies the *value* of the INI option/value pair
+            * Values **MUST** be valid values as determined by the configuration format and **MUST** be valid values by 
+            PHP
+
+Example:
+
+```yml
+php5_sapi_cli_options:
+  - section: "Resource Limits"
+    options:
+      - option: max_execution_time  # (seconds)
+        value: 30
+```
+
+Default: *See role defaults*
 
 ## Developing
 

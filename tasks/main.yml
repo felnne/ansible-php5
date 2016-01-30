@@ -5,3 +5,8 @@
   tags:
     - BARC_INSTALL
     - BARC_INSTALL_PACKAGES
+
+- include: configure-php-cli-sapi.yml
+  tags:
+    - BARC_CONFIGURE
+    - BARC_CONFIGURE_PACKAGE

@@ -9,3 +9,12 @@
   assert:
     that:
       - "'PHP 5.' in php5_test_fact_php_version.stdout"
+
+- name: get configured time zone
+  command: php -i | grep 'date.timezone'
+  changed_when: False
+  register: php5_test_fact_php_timezone
+- name: assert configured time zone is set correctly
+  assert:
+    that:
+      - "'Europe/London' in php5_test_fact_php_timezone.stdout"

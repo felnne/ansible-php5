@@ -6,7 +6,7 @@
 # For each test a set of tasks will be run to check the selected features of roles are correctly applied.
 
 - name: setup and test the php 5 role
-  hosts: barc-php5-test-system-packages-only
+  hosts: barc-php5-test-bare
   remote_user: controller
   become: yes
   roles:

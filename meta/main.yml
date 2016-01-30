@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Felix Fennell
-  description: Installs PHP 5
+  description: Installs and configures PHP 5
   company: British Antarctic Survey
 
   issue_tracker_url: https://jira.ceh.ac.uk/browse/BARC
