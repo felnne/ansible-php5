@@ -1,0 +1,11 @@
+---
+# Tests PHP 5 is installed correctly
+
+- name: determine if PHP packages are installed - Ubuntu
+  command: dpkg -s php5-cli
+  changed_when: False
+  register: php5_test_fact_php_packages_installed
+- name: assert PHP packages are installed
+  assert:
+    that:
+      - "'install ok installed' in php5_test_fact_php_packages_installed.stdout"
