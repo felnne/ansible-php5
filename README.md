@@ -4,7 +4,7 @@ Master:
 
 Develop:
 
-Installs and configures PHP 5
+Installs and configures PHP 5 and selected extensions
 
 **Part of the BAS Ansible Role Collection (BARC)**
 
@@ -13,6 +13,7 @@ Installs and configures PHP 5
 * Installs the latest stable version of PHP 5 from non-system, or optionally, from system only sources
 * Configures the PHP configuration file for the CLI SAPI using recommended settings to improve security
 * Optionally, installs and enables the Zend OpCache extension, this is enabled by default
+* Optionally, installs and enables the XDebug debugger extension, this is disabled by default
 
 # TODO (Remove)
 
@@ -76,6 +77,33 @@ CentOS does support loading configuration files from a directory of configuratio
 
 *This limitation is considered to be significant. Solutions will be actively pursued. Pull requests to address this* 
 *will be gratefully considered and given priority.*
+
+See [BARC-]() for further details.
+
+* Extensions which have been enabled, and later disabled, are not actively disabled on machines this role is applied to
+
+This behaviour relates to how *disabled* applies to extensions managed by this role.
+
+* Where an extension is *enabled* it will be installed, if necessary, and enabled on machines this role is applied to
+* Where an extension is *disabled* it will not installed on machines this role is applied to
+
+This means:
+* If an extension would not normally be enabled, and is disabled in this role it will remain disabled
+* If an extension would normally be enabled, and is disabled in this role it will remain enabled
+* Additionally, if an extension would not normally be enabled, is enabled in this role, applied, then disabled and 
+applied, it will remain enabled
+
+This is considered acceptable a machines are assumed to be easily replaceable, and so in situations where a previously enabled extension should now be disabled, it is assumed it is acceptable to rebuilt the relevant machines where the 
+extension will start disabled.
+
+It is recognised some extensions are initially enabled (by the relevant PHP package, not this role) and that these
+extensions cannot therefore be disabled. However disabling these extensions is by definition not typical and therefore 
+acceptable to require users to override with their own tasks. If this is needed, this role will not interfere, unless
+the relevant extension is enabled in this role. This currently only applies to the Zend OpCache extension.
+
+*This limitation is **NOT** considered to be significant.*
+*Solutions will be **NOT** actively pursued as it is intentional.*
+*Pull requests to address this will **NOT** be considered.*
 
 See [BARC-]() for further details.
 
@@ -174,6 +202,21 @@ this role disable this extension. However on CentOS, where this extension is not
 If you wish to *actively* disable this extension you will need to add your own tasks. This role will not present a 
 conflict in this situation.
 
+#### XDebug
+
+"Xdebug is a PHP extension which provides debugging and profiling capabilities.[1] It uses the DBGp debugging protocol."
+
+Source: https://xdebug.org/
+
+This extension is disabled by default - it is controlled by the *php5_use_xdebug* variable.
+Currently this role does not configure options for this extension, however it is safe to do this outside this role.
+
+Note: If you enable this extension and then later choose to disable it, this role will not disable the extension.
+Instead you will need to re-build any machines this role has been applied to.
+
+This is considered a limitation, but by intention and will not be addressed, see the *Limitations* section for more 
+information.
+
 ### Typical playbook
 
 ```yaml
@@ -265,6 +308,19 @@ Default: *See role defaults*
 * Values **SHOULD NOT** be quoted to prevent Ansible coercing values to a string
 * Where not specified, a value of `true` will be assumed
 * Default: `true`
+
+#### *php5_use_xdebug*
+
+* **MAY** be specified
+* Specifies whether the XDebug extension should be installed to aid in debugging
+* This variable is used as a 'feature flag' for whether tasks related to the XDebug extension will be applied
+* See the *Usage* section for more information on this feature
+* Values **MUST** use one of these options, as determined by Ansible:
+  * `true`
+  * `false`
+* Values **SHOULD NOT** be quoted to prevent Ansible coercing values to a string
+* Where not specified, a value of `true` will be assumed
+* Default: `false`
 
 ## Developing
 

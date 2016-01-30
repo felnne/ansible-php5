@@ -12,6 +12,12 @@
     - BARC_INSTALL
     - BARC_INSTALL_PACKAGES
 
+- include: install-ext-xdebug.yml
+  when: php5_use_xdebug == true
+  tags:
+    - BARC_INSTALL
+    - BARC_INSTALL_PACKAGES
+
 - include: configure-sapi-cli.yml
   tags:
     - BARC_CONFIGURE

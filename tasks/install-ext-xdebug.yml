@@ -1,0 +1,52 @@
+---
+# Install XDebug extension
+
+# If using non-system sources (preferred)
+
+- name: install XDebug extension from non-system sources - CentOS
+  yum:
+             pkg={{ item }}
+    update_cache=yes
+           state=present
+  with_items:
+    - php56w-pecl-xdebug
+  when: ansible_distribution == "CentOS" and
+    (BARC_use_non_system_package_sources == true or BARC_use_non_system_package_sources == 'True')
+
+- name: install XDebug extension from non-system sources - Ubuntu
+  apt:
+                 pkg={{ item }}
+        update_cache=yes
+    cache_valid_time=3600
+               state=present
+  with_items:
+    - php5-xdebug
+  when: ansible_distribution == "Ubuntu" and
+    (BARC_use_non_system_package_sources == true or BARC_use_non_system_package_sources == 'True')
+
+# If using system-sources only
+
+- include: setup-epel-repository.yml
+  when: ansible_distribution == "CentOS" and
+    (BARC_use_non_system_package_sources == false or BARC_use_non_system_package_sources == 'False')
+
+- name: install OpCache extension from non-system sources - CentOS
+  yum:
+             pkg={{ item }}
+    update_cache=yes
+           state=present
+  with_items:
+    - php-pecl-xdebug
+  when: ansible_distribution == "CentOS" and
+    (BARC_use_non_system_package_sources == false or BARC_use_non_system_package_sources == 'Faslse')
+
+- name: install XDebug extension from system only sources - Ubuntu
+  apt:
+                 pkg={{ item }}
+        update_cache=yes
+    cache_valid_time=3600
+               state=present
+  with_items:
+    - php5-xdebug
+  when: ansible_distribution == "CentOS" and
+    (BARC_use_non_system_package_sources == false or BARC_use_non_system_package_sources == 'False')

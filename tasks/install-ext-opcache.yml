@@ -13,6 +13,8 @@
   when: ansible_distribution == "CentOS" and
     (BARC_use_non_system_package_sources == true or BARC_use_non_system_package_sources == 'True')
 
+# The OpCache extension is already enabled on Ubuntu when using non-system package sources
+
 # If using system-sources only
 
 - include: setup-epel-repository.yml
@@ -28,7 +30,5 @@
     - php-pecl-zendopcache
   when: ansible_distribution == "CentOS" and
     (BARC_use_non_system_package_sources == false or BARC_use_non_system_package_sources == 'Faslse')
-
-# The OpCache extension is already enabled on Ubuntu when using non-system package sources
 
 # The OpCache extension is already enabled on Ubuntu when using system only package sources

@@ -34,3 +34,5 @@ php5_sapi_cli_options:
         value: "Off"
 
 php5_use_opcache: true
+
+php5_use_xdebug: false

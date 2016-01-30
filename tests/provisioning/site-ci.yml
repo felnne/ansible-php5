@@ -8,6 +8,8 @@
 - name: test installing php using non-system sources
   hosts: local
   become: yes
+  vars:
+    php5_use_xdebug: true
   roles:
     - ~/php5
   tasks:

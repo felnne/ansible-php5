@@ -9,6 +9,9 @@
 
 - include: install-php.yml
 
+- include: install-ext-xdebug.yml
+  when: php5_use_xdebug == true
+
 - include: configure-sapi-cli.yml
 
 # Functionality checks
@@ -19,3 +22,6 @@
 
 - include: test-ext-opcache.yml
   when: php5_use_opcache == true
+
+- include: test-ext-xdebug.yml
+  when: php5_use_xdebug == true

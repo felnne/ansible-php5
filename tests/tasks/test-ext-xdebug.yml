@@ -1,0 +1,11 @@
+---
+# Tests if XDebug extension is enabled
+
+- name: get PHP version
+  command: php -v
+  changed_when: False
+  register: php5_test_fact_php_version
+- name: assert XDebug extension is present
+  assert:
+    that:
+      - "'with Xdebug' in php5_test_fact_php_version.stdout"

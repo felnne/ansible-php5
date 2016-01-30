@@ -1,0 +1,11 @@
+---
+# Tests XDebug extension is installed and enabled
+
+- name: get PHP settings
+  command: php -i
+  changed_when: False
+  register: php5_test_fact_php_info
+- name: assert XDebug extension is enabled
+  assert:
+    that:
+      - "'xdebug support => enabled' in php5_test_fact_php_info.stdout"
