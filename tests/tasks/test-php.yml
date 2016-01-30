@@ -3,6 +3,7 @@
 
 - name: get PHP version
   command: php -v
+  changed_when: False
   register: php5_test_fact_php_version
 - name: assert PHP version is displayed and is at least version 5
   assert:
