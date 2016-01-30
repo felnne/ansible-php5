@@ -7,6 +7,12 @@
     - BARC_INSTALL_PACKAGES
 
 - include: configure-php-cli-sapi.yml
+- include: install-ext-opcache.yml
+  when: php5_use_opcache == true
+  tags:
+    - BARC_INSTALL
+    - BARC_INSTALL_PACKAGES
+
   tags:
     - BARC_CONFIGURE
     - BARC_CONFIGURE_PACKAGE

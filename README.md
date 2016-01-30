@@ -12,6 +12,7 @@ Installs and configures PHP 5
 
 * Installs the latest stable version of PHP 5 from non-system, or optionally, from system only sources
 * Configures the PHP configuration file for the CLI SAPI using recommended settings to improve security
+* Optionally, installs and enables the Zend OpCache extension, this is enabled by default
 
 # TODO (Remove)
 
@@ -152,6 +153,28 @@ See the *php5_sapi_cli_options* variable in the role defaults file (`defaults/ma
 Where any of these options are unsuitable, override this variable with a copy of these defaults, omitting the unsuitable
 options.
 
+### PHP extensions
+
+#### Zend OpCache
+
+"OPcache improves PHP performance by storing precompiled script bytecode in shared memory, thereby removing the need for PHP to load and parse scripts on each request. This extension is bundled with PHP 5.5.0 and later"
+
+Source: http://php.net/manual/en/book.opcache.php
+
+This extension is enabled by default - it is controlled by the *php5_use_opcache* variable.
+Currently this role does not configure options for this extension, however it is safe to do this outside this role.
+
+Note: As the version of PHP installed is inconsistent, this role ensures the OpCache extension is present and enabled in 
+all versions of PHP on all supported Operating Systems, where this desired.
+
+Note: If this extension is disabled, in this role, it will not *actively* be disabled.
+I.e. on Ubuntu this extension is enabled by default, setting the *php5_use_opcache* variable to 'false' will not make 
+this role disable this extension. However on CentOS, where this extension is not-enabled by default, setting the 
+*php5_use_opcache* variable to 'false' will cause this to change.
+
+If you wish to *actively* disable this extension you will need to add your own tasks. This role will not present a 
+conflict in this situation.
+
 ### Typical playbook
 
 ```yaml
@@ -230,6 +253,19 @@ php5_sapi_cli_options:
 ```
 
 Default: *See role defaults*
+
+#### *php5_use_opcache*
+
+* **MAY** be specified
+* Specifies whether the Zend OpCache extension should be installed to improve performance
+* This variable is used as a 'feature flag' for whether tasks related to the OpCache extension will be applied
+* See the *Usage* section for more information on this feature
+* Values **MUST** use one of these options, as determined by Ansible:
+  * `true`
+  * `false`
+* Values **SHOULD NOT** be quoted to prevent Ansible coercing values to a string
+* Where not specified, a value of `true` will be assumed
+* Default: `true`
 
 ## Developing
 

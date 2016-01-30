@@ -36,3 +36,5 @@ php5_sapi_cli_options:
     options:
       - option: expose_php
         value: "Off"
+
+php5_use_opcache: true

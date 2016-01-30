@@ -16,3 +16,6 @@
 # using an configuration that may have been set by this role.
 
 - include: test-php.yml
+
+- include: test-ext-opcache.yml
+  when: php5_use_opcache == true
