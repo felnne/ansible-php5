@@ -7,9 +7,9 @@
 
 # Core configuration
 
-- include: install.yml
+- include: install-php.yml
 
-- include: configure-php-cli-sapi.yml
+- include: configure-sapi-cli.yml
 
 # Functionality checks
 # These checks need to run after the package or service has been configured to ensure it is working correctly,
