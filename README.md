@@ -18,8 +18,6 @@ php-opcache ?
 php-xdebug ?
 blackfire profiler ?
 
-Explain why php5-cli is installed and not just php5 (installs Apache)
-
 CI?
 
 ## Quality Assurance
