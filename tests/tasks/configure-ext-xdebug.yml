@@ -1,0 +1,30 @@
+---
+# Test if the PHP 5 XDebug extension is configured correctly
+
+- name: get contents of XDebug extension configuration file - CentOS
+  command: cat /etc/php.d/xdebug.ini
+  changed_when: false
+  register: php5_test_fact_xdebug_extension_centos_configuration_file_contents
+  when: ansible_distribution == "CentOS"
+- name: assert XDebug extension configuration file was generated correctly - CentOS
+  assert:
+    that:
+      - "'{{ item.1.option }} = {{ item.1.value }}' in php5_test_fact_xdebug_extension_centos_configuration_file_contents.stdout"
+  with_subelements:
+    - php5_ext_xdebug_options
+    - options
+  when: ansible_distribution == "CentOS"
+
+- name: get contents of XDebug extension configuration file - Ubuntu
+  command: cat /etc/php5/mods-available/xdebug.ini
+  changed_when: false
+  register: php5_test_fact_xdebug_extension_ubuntu_configuration_file_contents
+  when: ansible_distribution == "Ubuntu"
+- name: assert XDebug extension configuration file was generated correctly - Ubuntu
+  assert:
+    that:
+      - "'{{ item.1.option }} = {{ item.1.value }}' in php5_test_fact_xdebug_extension_ubuntu_configuration_file_contents.stdout"
+  with_subelements:
+    - php5_ext_xdebug_options
+    - options
+  when: ansible_distribution == "Ubuntu"

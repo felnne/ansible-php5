@@ -209,7 +209,25 @@ conflict in this situation.
 Source: https://xdebug.org/
 
 This extension is disabled by default - it is controlled by the *php5_use_xdebug* variable.
-Currently this role does not configure options for this extension, however it is safe to do this outside this role.
+
+Important: Enabling this extension introduces additional performance and security considerations. This extension 
+**MUST NOT** be enabled in production environments, or in any environment where sensitive information is involved,
+unless these considerations are suitably addressed.
+
+This role configures options for this extension. It is not safe to override options this role sets, however it is safe 
+to override the *php5_ext_xdebug_options* variable to remove options or change values this role sets.
+
+It is safe to set any other options this role does not outside this role, they will not be overridden.
+
+The following options are set:
+
+* `xdebug.remote_connect_back`
+  * [XDebug documentation](https://xdebug.org/docs/all_settings#remote_connect_back)
+  * Enabled to allow any machine to debug a session - note this has security implications meaning this extension 
+    **MUST NOT** be used in production environments
+* `xdebug.remote_enable`
+  * [XDebug documentation](https://xdebug.org/docs/all_settings#remote_enable)
+  * Instructs XDebug to contact potentially listening remote clients, or otherwise continue with normal execution
 
 Note: If you enable this extension and then later choose to disable it, this role will not disable the extension.
 Instead you will need to re-build any machines this role has been applied to.
@@ -321,6 +339,47 @@ Default: *See role defaults*
 * Values **SHOULD NOT** be quoted to prevent Ansible coercing values to a string
 * Where not specified, a value of `true` will be assumed
 * Default: `false`
+
+#### *php5_ext_xdebug_options*
+
+**MAY** be specified.
+
+Specifies configuration options for the XDebug Extension.
+
+Structured as a list of items, with each item having the following properties:
+
+* *section*
+    * **MUST** be specified as `XDebug`
+    * Specifies the section of the INI configuration file options for this item belong to
+    * Values **MUST** be the valid section names for this extension as determined by PHP
+* *options*
+    * **MAY** be specified
+    * Specifies the list of options, and values, to be set within the section set by the *section* item
+    * Structured as a list of sub-items, with each sub-item having the following properties
+        * *option*
+            * **MUST** be specified if any part of the sub-item is specified
+            * Specifies the *option* of the INI option/value pair
+            * Values **MUST** be valid option names as determined by the INI configuration format and **MUST** be valid
+            option names as determined by PHP and the XDebug extension
+        * *value*
+            * *MUST** be specified if any part of the sub-item is specified
+            * Specifies the *value* of the INI option/value pair
+            * Values **MUST** be valid values as determined by the INI configuration format and **MUST** be valid
+            option names as determined by PHP and the XDebug extension
+            * Boolean values **MUST** be quoted to prevent Ansible coercing values to True/False which is invalid for 
+            PHP configurations
+
+Example:
+
+```yml
+php5_sapi_cli_options:
+  - section: "XDebug"
+    options:
+      - option: remote_connect_back
+        value: "On"
+```
+
+Default: *See role defaults*
 
 ## Developing
 

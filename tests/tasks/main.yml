@@ -14,6 +14,9 @@
 
 - include: configure-sapi-cli.yml
 
+- include: configure-ext-xdebug.yml
+  when: php5_use_xdebug == true
+
 # Functionality checks
 # These checks need to run after the package or service has been configured to ensure it is working correctly,
 # using an configuration that may have been set by this role.

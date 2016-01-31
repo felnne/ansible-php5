@@ -36,3 +36,10 @@ php5_sapi_cli_options:
 php5_use_opcache: true
 
 php5_use_xdebug: false
+php5_ext_xdebug_options:
+  - section: "XDebug"
+    options:
+      - option: xdebug.remote_connect_back
+        value: "On"
+      - option: xdebug.remote_enable
+        value: "On"
