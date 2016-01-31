@@ -1,5 +1,5 @@
 ---
-# Test if PHP 5 is configured correctly
+# Test if the PHP 5 CLI SAPI is configured correctly
 
 - name: get contents of PHP CLI SAPI configuration file - CentOS
   command: cat /etc/php.ini

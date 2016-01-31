@@ -17,7 +17,6 @@ Installs and configures PHP 5 and selected extensions
 
 # TODO (Remove)
 
-php-opcache ?
 php-xdebug ?
 blackfire profiler ?
 
@@ -192,15 +191,14 @@ This extension is enabled by default - it is controlled by the *php5_use_opcache
 Currently this role does not configure options for this extension, however it is safe to do this outside this role.
 
 Note: As the version of PHP installed is inconsistent, this role ensures the OpCache extension is present and enabled in 
-all versions of PHP on all supported Operating Systems, where this desired.
+all versions of PHP on all supported Operating Systems, where this feature is desired.
 
-Note: If this extension is disabled, in this role, it will not *actively* be disabled.
-I.e. on Ubuntu this extension is enabled by default, setting the *php5_use_opcache* variable to 'false' will not make 
-this role disable this extension. However on CentOS, where this extension is not-enabled by default, setting the 
-*php5_use_opcache* variable to 'false' will cause this to change.
+Note: If you enable this extension and then later choose to disable it, or where this extension is enabled by default,
+such as on Ubuntu, this role will not disable the extension. Instead you will need to re-build any machines this role 
+has been applied to.
 
-If you wish to *actively* disable this extension you will need to add your own tasks. This role will not present a 
-conflict in this situation.
+This is considered a limitation, but by intention and will not be addressed, see the *Limitations* section for more 
+information.
 
 #### XDebug
 
@@ -276,12 +274,13 @@ This role uses the following tags, for various tasks:
 #### *php5_sapi_cli_options*
 
 **MAY** be specified.
-Specifies configuration options for the CLI (Command Line) SAPI
+
+Specifies configuration options for the CLI (Command Line) SAPI.
 
 Note: On some Operating Systems, these options may apply beyond the scope of the CLI SAPI. See the *Limitations*
-section for more information
+section for more information.
 
-Structured as a list of items, with each item having the following properties
+Structured as a list of items, with each item having the following properties:
 
 * *section*
     * **MUST** be specified
@@ -294,13 +293,15 @@ Structured as a list of items, with each item having the following properties
         * *option*
             * **MUST** be specified if any part of the sub-item is specified
             * Specifies the *option* of the INI option/value pair
-            * Values **MUST** be valid option names as determined by the configuration format and **MUST** be valid
-            option names by PHP
+            * Values **MUST** be valid option names as determined by the INI configuration format and **MUST** be valid
+            option names as determined by PHP and the XDebug extension
         * *value*
             * *MUST** be specified if any part of the sub-item is specified
             * Specifies the *value* of the INI option/value pair
-            * Values **MUST** be valid values as determined by the configuration format and **MUST** be valid values by 
-            PHP
+            * Values **MUST** be valid values as determined by the INI configuration format and **MUST** be valid
+            option names as determined by PHP and the XDebug extension
+            * Boolean values **MUST** be quoted to prevent Ansible coercing values to True/False which is invalid for 
+            PHP configurations
 
 Example:
 
@@ -345,6 +346,7 @@ Default: *See role defaults*
 **MAY** be specified.
 
 Specifies configuration options for the XDebug Extension.
+See the *Usage* section for details on the default options set for this extension.
 
 Structured as a list of items, with each item having the following properties:
 
@@ -372,7 +374,7 @@ Structured as a list of items, with each item having the following properties:
 Example:
 
 ```yml
-php5_sapi_cli_options:
+php5_ext_xdebug_options:
   - section: "XDebug"
     options:
       - option: remote_connect_back

@@ -9,6 +9,9 @@
 
 - include: install-php.yml
 
+- include: install-ext-opcache.yml
+  when: php5_use_opcache == true
+
 - include: install-ext-xdebug.yml
   when: php5_use_xdebug == true
 

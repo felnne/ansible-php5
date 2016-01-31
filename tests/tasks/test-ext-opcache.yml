@@ -9,3 +9,11 @@
   assert:
     that:
       - "'with Zend OPcache' in php5_test_fact_php_version.stdout"
+
+# Normally this check would determine if the OpCache extension is enabled, not just present
+# However for the CLI SAPI (which we test here) it is purposely disabled so would fail
+# Other roles, for other SAPIs, may make additional checks for this extension if necessary
+
+- name: determine if OpCache is present
+  shell: php -i | grep -q 'Opcode Caching'
+  changed_when: False

@@ -23,7 +23,11 @@
   when: ansible_distribution == "CentOS"
 
 - name: configure PHP XDebug extension configuration file - Ubuntu
-  ini_file: dest=/etc/php5/mods-available/xdebug.ini section='{{ item.0.section }}' option='{{ item.1.option }}' value='{{ item.1.value }}'
+  ini_file:
+       dest=/etc/php5/mods-available/xdebug.ini
+    section='{{ item.0.section }}'
+     option='{{ item.1.option }}'
+      value='{{ item.1.value }}'
   with_subelements:
     - php5_ext_xdebug_options
     - options

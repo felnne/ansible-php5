@@ -1,11 +1,27 @@
 ---
-# Tests XDebug extension is installed and enabled
+# Tests the XDebug extension is installed
 
-- name: get PHP settings
-  command: php -i
+# CentOS and Ubuntu do use different packages for non-system and system-only packages
+# however they are common enough for this check to be sufficient
+
+- name: determine if XDebug extension package is installed - CentOS
+  command: rpm -qa
   changed_when: False
-  register: php5_test_fact_php_info
-- name: assert XDebug extension is enabled
+  register: php5_test_fact_xdebug_extension_is_installed_centos
+  when: ansible_distribution == "CentOS"
+- name: assert XDebug extension package is installed - CentOS
   assert:
     that:
-      - "'xdebug support => enabled' in php5_test_fact_php_info.stdout"
+      - "'-pecl-xdebug' in php5_test_fact_xdebug_extension_is_installed_centos.stdout"
+  when: ansible_distribution == "CentOS"
+
+- name: determine if XDebug extension package is installed - Ubuntu
+  command: dpkg -s php5-xdebug
+  changed_when: False
+  register: php5_test_fact_xdebug_extension_is_installed_ubuntu
+  when: ansible_distribution == "Ubuntu"
+- name: assert XDebug extension package is installed
+  assert:
+    that:
+      - "'install ok installed' in php5_test_fact_xdebug_extension_is_installed_ubuntu.stdout"
+  when: ansible_distribution == "Ubuntu"
