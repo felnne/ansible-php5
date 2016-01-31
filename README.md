@@ -188,7 +188,26 @@ options.
 Source: http://php.net/manual/en/book.opcache.php
 
 This extension is enabled by default - it is controlled by the *php5_use_opcache* variable.
-Currently this role does not configure options for this extension, however it is safe to do this outside this role.
+
+This role configures options for this extension. It is not safe to override options this role sets, however it is safe 
+to override the *php5_ext_opcache_options* variable to remove options or change values this role sets.
+
+It is safe to set any other options this role does not outside this role, they will not be overridden.
+
+The following options are set:
+
+* `opcache.fast_shutdown`
+  * [OpCache documentation](http://php.net/manual/en/opcache.configuration.php#ini.opcache.fast-shutdown)
+  * Enabled for consistency between CentOS and Ubuntu defaults (CentOS wins)
+* `opcache.interned_strings_buffer`
+  * [OpCache documentation](http://php.net/manual/en/opcache.configuration.php#ini.opcache.interned-strings-buffer)
+  * Enabled for consistency between CentOS and Ubuntu defaults (CentOS wins)
+* `opcache.max_accelerated_files`
+  * [OpCache documentation](http://php.net/manual/en/opcache.configuration.php#ini.opcache.max-accelerated-files)
+  * Enabled for consistency between CentOS and Ubuntu defaults (CentOS wins)
+* `opcache.memory_consumption`
+  * [OpCache documentation](http://php.net/manual/en/opcache.configuration.php#ini.opcache.memory-consumption)
+  * Enabled for consistency between CentOS and Ubuntu defaults (CentOS wins)
 
 Note: As the version of PHP installed is inconsistent, this role ensures the OpCache extension is present and enabled in 
 all versions of PHP on all supported Operating Systems, where this feature is desired.
@@ -327,6 +346,48 @@ Default: *See role defaults*
 * Values **SHOULD NOT** be quoted to prevent Ansible coercing values to a string
 * Where not specified, a value of `true` will be assumed
 * Default: `true`
+
+#### *php5_ext_opcache_options*
+
+**MAY** be specified.
+
+Specifies configuration options for the OpCache Extension.
+See the *Usage* section for details on the default options set for this extension.
+
+Structured as a list of items, with each item having the following properties:
+
+* *section*
+    * **MUST** be specified as `OPCache`
+    * Specifies the section of the INI configuration file options for this item belong to
+    * Values **MUST** be the valid section names for this extension as determined by PHP
+* *options*
+    * **MAY** be specified
+    * Specifies the list of options, and values, to be set within the section set by the *section* item
+    * Structured as a list of sub-items, with each sub-item having the following properties
+        * *option*
+            * **MUST** be specified if any part of the sub-item is specified
+            * Specifies the *option* of the INI option/value pair
+            * Values **MUST** be valid option names as determined by the INI configuration format and **MUST** be valid
+            option names as determined by PHP and the OpCache extension
+        * *value*
+            * *MUST** be specified if any part of the sub-item is specified
+            * Specifies the *value* of the INI option/value pair
+            * Values **MUST** be valid values as determined by the INI configuration format and **MUST** be valid
+            option names as determined by PHP and the OpCache extension
+            * Boolean values **MUST** be quoted to prevent Ansible coercing values to True/False which is invalid for 
+            PHP configurations
+
+Example:
+
+```yml
+php5_ext_opcache_options:
+  - section: "XDebug"
+    options:
+      - option: remote_connect_back
+        value: "On"
+```
+
+Default: *See role defaults*
 
 #### *php5_use_xdebug*
 

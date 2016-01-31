@@ -17,6 +17,9 @@
 
 - include: configure-sapi-cli.yml
 
+- include: configure-ext-opcache.yml
+  when: php5_use_opcache == true
+
 - include: configure-ext-xdebug.yml
   when: php5_use_xdebug == true
 

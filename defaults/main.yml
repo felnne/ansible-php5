@@ -34,6 +34,18 @@ php5_sapi_cli_options:
         value: "Off"
 
 php5_use_opcache: true
+php5_ext_opcache_options:
+  - section: "OPCache"
+    options:
+      - option: opcache.fast_shutdown
+        value: "On"
+      - option: opcache.interned_strings_buffer
+        value: 8
+      - option: opcache.max_accelerated_files
+        value: 4000
+      - option: opcache.memory_consumption
+        value: 128
+
 
 php5_use_xdebug: false
 php5_ext_xdebug_options:

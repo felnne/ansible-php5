@@ -1,0 +1,30 @@
+---
+# Test if the PHP 5 OpCache extension is configured correctly
+
+- name: get contents of OpCache extension configuration file - CentOS
+  command: cat /etc/php.d/opcache.ini
+  changed_when: false
+  register: php5_test_fact_opcache_extension_centos_configuration_file_contents
+  when: ansible_distribution == "CentOS"
+- name: assert OpCache extension configuration file was generated correctly - CentOS
+  assert:
+    that:
+      - "'{{ item.1.option }} = {{ item.1.value }}' in php5_test_fact_opcache_extension_centos_configuration_file_contents.stdout"
+  with_subelements:
+    - php5_ext_opcache_options
+    - options
+  when: ansible_distribution == "CentOS"
+
+- name: get contents of OpCache extension configuration file - Ubuntu
+  command: cat /etc/php5/mods-available/opcache.ini
+  changed_when: false
+  register: php5_test_fact_opcache_extension_ubuntu_configuration_file_contents
+  when: ansible_distribution == "Ubuntu"
+- name: assert OpCache extension configuration file was generated correctly - Ubuntu
+  assert:
+    that:
+      - "'{{ item.1.option }} = {{ item.1.value }}' in php5_test_fact_opcache_extension_ubuntu_configuration_file_contents.stdout"
+  with_subelements:
+    - php5_ext_opcache_options
+    - options
+  when: ansible_distribution == "Ubuntu"

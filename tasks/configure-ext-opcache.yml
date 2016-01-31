@@ -1,0 +1,34 @@
+---
+# Configure OpCache extension
+
+- name: prepare Ansible compatible configuration file for OpCache extension - CentOS
+  shell: grep -q -F '[OPCache]' /etc/php.d/opcache.ini || sed -i '1s/^/[OPCache]\n/' /etc/php.d/opcache.ini
+  changed_when: false
+  when: ansible_distribution == "CentOS"
+
+- name: prepare Ansible compatible configuration file for OpCache extension - Ubuntu
+  shell: grep -q -F '[OPCache]' /etc/php5/mods-available/opcache.ini || sed -i '1s/^/[OPCache]\n/' /etc/php5/mods-available/opcache.ini
+  changed_when: false
+  when: ansible_distribution == "Ubuntu"
+
+- name: configure PHP OpCache extension configuration file - CentOS
+  ini_file:
+       dest=/etc/php.d/opcache.ini
+    section='{{ item.0.section }}'
+     option='{{ item.1.option }}'
+      value='{{ item.1.value }}'
+  with_subelements:
+    - php5_ext_opcache_options
+    - options
+  when: ansible_distribution == "CentOS"
+
+- name: configure PHP OpCache extension configuration file - Ubuntu
+  ini_file:
+       dest=/etc/php5/mods-available/opcache.ini
+    section='{{ item.0.section }}'
+     option='{{ item.1.option }}'
+      value='{{ item.1.value }}'
+  with_subelements:
+    - php5_ext_opcache_options
+    - options
+  when: ansible_distribution == "Ubuntu"

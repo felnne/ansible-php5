@@ -23,6 +23,12 @@
     - BARC_CONFIGURE
     - BARC_CONFIGURE_PACKAGE
 
+- include: configure-ext-opcache.yml
+  when: php5_use_opcache == true
+  tags:
+    - BARC_CONFIGURE
+    - BARC_CONFIGURE_PACKAGE
+
 - include: configure-ext-xdebug.yml
   when: php5_use_xdebug == true
   tags:
