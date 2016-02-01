@@ -11,10 +11,11 @@ Installs and configures PHP 5 and selected extensions
 ## Overview
 
 * Installs the latest stable version of PHP 5 from non-system, or optionally, from system only sources
+* Harmonises defaults for SAPIs, and optional extensions, between CentOS and Ubuntu Operating Systems
 * Configures the PHP configuration file for the CLI SAPI using recommended settings to improve security
-* Optionally, installs and enables the Zend OpCache extension, this is enabled by default
-* Optionally, installs and enables the XDebug debugger extension, this is disabled by default
+* Optionally, installs, enables and configures the Zend OpCache extension, this is enabled by default
 * Optionally, installs and enables the cURL PHP extension, this is enabled by default
+* Optionally, installs, enables and configures the XDebug debugger extension, this is disabled by default
 
 # TODO (Remove)
 
@@ -239,7 +240,7 @@ information.
 
 #### XDebug
 
-"Xdebug is a PHP extension which provides debugging and profiling capabilities.[1] It uses the DBGp debugging protocol."
+"Xdebug is a PHP extension which provides debugging and profiling capabilities. It uses the DBGp debugging protocol."
 
 Source: https://xdebug.org/
 
