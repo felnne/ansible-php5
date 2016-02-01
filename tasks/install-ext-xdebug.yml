@@ -48,5 +48,5 @@
                state=present
   with_items:
     - php5-xdebug
-  when: ansible_distribution == "CentOS" and
+  when: ansible_distribution == "Ubuntu" and
     (BARC_use_non_system_package_sources == false or BARC_use_non_system_package_sources == 'False')
