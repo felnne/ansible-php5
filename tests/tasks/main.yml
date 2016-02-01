@@ -12,6 +12,9 @@
 - include: install-ext-opcache.yml
   when: php5_use_opcache == true
 
+- include: install-ext-curl.yml
+  when: php5_use_curl == true
+
 - include: install-ext-xdebug.yml
   when: php5_use_xdebug == true
 
@@ -31,6 +34,9 @@
 
 - include: test-ext-opcache.yml
   when: php5_use_opcache == true
+
+- include: test-ext-curl.yml
+  when: php5_use_curl == true
 
 - include: test-ext-xdebug.yml
   when: php5_use_xdebug == true

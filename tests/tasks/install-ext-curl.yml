@@ -1,0 +1,17 @@
+---
+# Tests the cURL extension is installed
+
+# The cURL extension is already enabled on CentOS when using non-system package sources
+
+# The cURL extension uses the same package name on Ubuntu for non-system and system only package sources
+
+- name: determine if cURL extension package is installed - Ubuntu
+  command: dpkg -s php5-curl
+  changed_when: False
+  register: php5_test_fact_curl_extension_is_installed_ubuntu
+  when: ansible_distribution == "Ubuntu"
+- name: assert cURL extension package is installed
+  assert:
+    that:
+      - "'install ok installed' in php5_test_fact_curl_extension_is_installed_ubuntu.stdout"
+  when: ansible_distribution == "Ubuntu"

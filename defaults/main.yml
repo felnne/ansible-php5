@@ -46,6 +46,7 @@ php5_ext_opcache_options:
       - option: opcache.memory_consumption
         value: 128
 
+php5_use_curl: true
 
 php5_use_xdebug: false
 php5_ext_xdebug_options:

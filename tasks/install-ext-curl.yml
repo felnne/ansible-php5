@@ -1,0 +1,16 @@
+---
+# Install cURL extension
+
+# The cURL extension is already enabled on CentOS when using non-system package sources
+
+# The cURL extension uses the same package name on Ubuntu for non-system and system only package sources
+
+- name: install cURL extension - Ubuntu
+  apt:
+                 pkg={{ item }}
+        update_cache=yes
+    cache_valid_time=3600
+               state=present
+  with_items:
+    - php5-curl
+  when: ansible_distribution == "Ubuntu"

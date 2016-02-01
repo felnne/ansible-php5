@@ -1,0 +1,6 @@
+---
+# Tests if cURL extension is enabled
+
+- name: determine if cURL extension is enabled
+  shell: php -i | grep -q 'cURL support => enabled'
+  changed_when: False
