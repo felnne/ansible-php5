@@ -11,10 +11,11 @@ Installs and configures PHP 5 and selected extensions
 ## Overview
 
 * Installs the latest stable version of PHP 5 from non-system, or optionally, from system only sources
-* Harmonises defaults for SAPIs, and optional extensions, between CentOS and Ubuntu Operating Systems
+* Harmonises defaults for SAPIs, and some optional extensions, between CentOS and Ubuntu Operating Systems
 * Configures the PHP configuration file for the CLI SAPI using recommended settings to improve security
 * Optionally, installs, enables and configures the Zend OpCache extension, this is enabled by default
 * Optionally, installs and enables the cURL PHP extension, this is enabled by default
+* Optionally, installs and enables the GMP PHP extension, this is enabled by default
 * Optionally, installs, enables and configures the XDebug debugger extension, this is disabled by default
 
 # TODO (Remove)
@@ -106,6 +107,25 @@ the relevant extension is enabled in this role. This currently only applies to t
 
 See [BARC-]() for further details.
 
+* Not all extensions installed by default are available on all supported Operating Systems or PHP versions
+
+Specifically a number of optional, lesser used, PHP extensions are installed by default in some Operating Systems and 
+PHP versions and not others.
+
+Note: The version of PHP installed can be considered a proxy as to whether non-system or system only packages are used.
+
+In the case of well-used or important modules, this role will harmonise which extensions are available (for example 
+OpCache). For these other, lesser used, extensions there will be an inconsistency.
+
+Where these lesser used extensions are a requirement, for a particular project for example, it is NOT safe to rely on 
+this role to ensure they are available. Instead it would be required to use additional roles or playbooks to test for, 
+and if necessary ensure, these extensions being available.
+
+*This limitation is **NOT** considered to be significant. Solutions will **NOT** be actively pursued.*
+*Pull requests addressing this limitation will be considered.*
+
+See [BARC-]() for further details.
+
 ## Usage
 
 ### PHP version
@@ -180,6 +200,31 @@ Where any of these options are unsuitable, override this variable with a copy of
 options.
 
 ### PHP extensions
+
+#### Non-Harmonised extensions
+
+This role aims to ensure the same extensions are available regardless of the Operating System used, or the version of
+PHP that is installed.
+
+For the extensions in the named sub-sections listed here this is true. However there are some, lesser used, extensions
+which may exist on some combinations of Operating System and PHP version, and not others. This inconsistency for lesser
+used extensions is considered a limitation, see the *Limitations* section for more information.
+
+The following extensions are **NOT** harmonised:
+
+* *bcmath*
+  * "For arbitrary precision mathematics PHP offers the Binary Calculator which supports numbers of any size and 
+  precision, represented as strings"
+  * [More information](http://php.net/manual/en/book.bc.php)
+  * As this extension is so similar to the GMP extension, which is made available on all OS/PHP combinations by this
+  role, it is not considered necessary to install this extension as well
+  * Available on: Ubuntu - all PHP versions
+  * NOT available on: CentOS - all PHP versions 
+* *dba*
+  * "Foundation for accessing Berkeley DB style databases, a general abstraction layer for several file-based databases"
+  * [More information](http://php.net/manual/en/book.dba.php)
+  * Available on: Ubuntu - all PHP versions
+  * NOT available on: CentOS - all PHP versions 
 
 #### Zend OpCache
 

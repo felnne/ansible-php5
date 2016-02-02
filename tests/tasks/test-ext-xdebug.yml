@@ -1,5 +1,5 @@
 ---
-# Tests if XDebug extension is enabled
+# Tests if the XDebug extension is enabled
 
 - name: get PHP version
   command: php -v

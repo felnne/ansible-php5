@@ -1,5 +1,5 @@
 ---
-# Tests if Zend OpCache extension is enabled
+# Tests if the Zend OpCache extension is enabled
 
 - name: get PHP version
   command: php -v
