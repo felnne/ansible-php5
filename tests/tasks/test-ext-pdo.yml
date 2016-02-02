@@ -1,0 +1,6 @@
+---
+# Tests if the PDO extension is enabled
+
+- name: determine if PDO extension is enabled
+  shell: php -i | grep -q 'PDO support => enabled'
+  changed_when: False

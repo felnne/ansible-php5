@@ -54,6 +54,8 @@ php5_use_xsl: true
 
 php5_use_mbstring: true
 
+php5_use_pdo: true
+
 php5_use_xdebug: false
 php5_ext_xdebug_options:
   - section: "XDebug"
