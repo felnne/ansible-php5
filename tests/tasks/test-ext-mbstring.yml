@@ -1,0 +1,6 @@
+---
+# Tests if the MBString extension is enabled
+
+- name: determine if MBString extension is enabled
+  shell: php -i | grep -q 'Multibyte Support => enabled'
+  changed_when: False

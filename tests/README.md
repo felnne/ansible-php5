@@ -25,15 +25,15 @@ Playbooks, host variables and other support files are kept in this `tests` direc
 
 A single scenario is tested using *Continuous Integration*:
 
-* Installs PHP from role default package sources, enables the OpCache, cURL, GMP, XSL and XDebug extensions and 
-configures the CLI SAPI
+* Installs PHP from role default package sources, enables the OpCache, cURL, GMP, XSL, MBString and XDebug extensions 
+and configures the CLI SAPI
 
 Multiple scenarios are tested *manually* using local VMs:
 
-1. `test-bare` - Installs PHP from role default package sources, enables the OpCache, cURL, GMP, XSL and XDebug 
-extensions and configures the CLI SAPI
-2. `system-only` - Installs PHP from system package sources only, enables the OpCache, cURL, GMP, XSL and XDebug 
-extensions and configures the CLI SAPI
+1. `test-bare` - Installs PHP from role default package sources, enables the OpCache, cURL, GMP, XSL, MBString and 
+XDebug extensions and configures the CLI SAPI
+2. `system-only` - Installs PHP from system package sources only, enables the OpCache, cURL, GMP, XSL, MBString and 
+XDebug extensions and configures the CLI SAPI
 
 Note: Multiple scenarios may be run within the same VM, providing they do not overlap.
 

@@ -30,6 +30,12 @@
     - BARC_INSTALL
     - BARC_INSTALL_PACKAGES
 
+- include: install-ext-mbstring.yml
+  when: php5_use_mbstring == true
+  tags:
+    - BARC_INSTALL
+    - BARC_INSTALL_PACKAGES
+
 - include: install-ext-xdebug.yml
   when: php5_use_xdebug == true
   tags:

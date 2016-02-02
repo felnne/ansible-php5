@@ -1,0 +1,33 @@
+---
+
+# The MMString extension is already enabled on Ubuntu when using non-system and system only package sources
+
+# If using non-system sources (preferred)
+
+- name: determine if MBString extension package is installed from non-system sources - CentOS
+  command: rpm -qa
+  changed_when: False
+  register: php5_test_fact_mbstring_extension_is_installed_non_system_centos
+  when: ansible_distribution == "CentOS" and
+    (BARC_use_non_system_package_sources == true or BARC_use_non_system_package_sources == 'True')
+- name: assert MBString extension package is installed from non-system sources - CentOS
+  assert:
+    that:
+      - "'-mbstring' in php5_test_fact_mbstring_extension_is_installed_non_system_centos.stdout"
+  when: ansible_distribution == "CentOS" and
+    (BARC_use_non_system_package_sources == true or BARC_use_non_system_package_sources == 'True')
+
+# If using system-sources only
+
+- name: determine if MBString extension package is installed from system only sources - CentOS
+  command: rpm -qa
+  changed_when: False
+  register: php5_test_fact_mbstring_extension_is_installed_system_only_centos
+  when: ansible_distribution == "CentOS" and
+    (BARC_use_non_system_package_sources == false or BARC_use_non_system_package_sources == 'False')
+- name: assert MBString extension package is installed from system only sources - CentOS
+  assert:
+    that:
+      - "'php-mbstring' in php5_test_fact_mbstring_extension_is_installed_system_only_centos.stdout"
+  when: ansible_distribution == "CentOS" and
+    (BARC_use_non_system_package_sources == false or BARC_use_non_system_package_sources == 'False')

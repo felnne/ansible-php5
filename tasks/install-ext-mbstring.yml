@@ -1,0 +1,28 @@
+---
+# Install MBString extension
+
+# The MMString extension is already enabled on Ubuntu when using non-system and system only package sources
+
+# If using non-system sources (preferred)
+
+- name: install MBString extension using non-system sources - CentOS
+  yum:
+             pkg={{ item }}
+    update_cache=yes
+           state=present
+  with_items:
+    - php56w-mbstring
+  when: ansible_distribution == "CentOS" and
+    (BARC_use_non_system_package_sources == true or BARC_use_non_system_package_sources == 'True')
+
+# If using system-sources only
+
+- name: install MBString extension using system only sources - CentOS
+  yum:
+             pkg={{ item }}
+    update_cache=yes
+           state=present
+  with_items:
+    - php-mbstring-5.4.16-36.el7_1
+  when: ansible_distribution == "CentOS" and
+    (BARC_use_non_system_package_sources == false or BARC_use_non_system_package_sources == 'False')
