@@ -19,8 +19,6 @@ Installs and configures PHP 5 and selected extensions
 
 # TODO (Remove)
 
-php-xdebug ?
-blackfire profiler ?
 
 ## Quality Assurance
 
@@ -408,7 +406,7 @@ php5_ext_opcache_options:
 
 Default: *See role defaults*
 
-#### *php5_use_cache*
+#### *php5_use_curl*
 
 * **MAY** be specified
 * Specifies whether the cURL PHP extension should be installed to interact with remote services

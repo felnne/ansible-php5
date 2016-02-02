@@ -37,7 +37,8 @@ configures the CLI SAPI
 
 Note: Multiple scenarios may be run within the same VM, providing they do not overlap.
 
-Manual scenarios are run on all Operating Systems this role supports. Continuous Integration scenarios are only run on Ubuntu Trusty (14.04).
+Manual scenarios are run on all Operating Systems this role supports.
+Continuous Integration scenarios are only run on Ubuntu Trusty (14.04).
 
 ## Continuous Integration
 

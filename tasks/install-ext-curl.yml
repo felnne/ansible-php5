@@ -1,7 +1,7 @@
 ---
 # Install cURL extension
 
-# The cURL extension is already enabled on CentOS when using non-system package sources
+# The cURL extension is already enabled on CentOS when using non-system and system only package sources
 
 # The cURL extension uses the same package name on Ubuntu for non-system and system only package sources
 
