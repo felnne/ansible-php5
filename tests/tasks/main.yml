@@ -64,3 +64,6 @@
 
 - include: test-ext-xdebug.yml
   when: php5_use_xdebug == true
+
+- include: test-composer.yml
+  when: php5_use_composer == true

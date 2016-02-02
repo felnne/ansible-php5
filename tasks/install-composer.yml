@@ -1,0 +1,45 @@
+---
+# Install Composer PHP package manager
+
+# Composer uses the same PHAR on CentOS and Ubuntu for non-system and system only package sources
+
+- name: determine if composer is installed
+  stat: path=/usr/local/bin/composer
+  register: php5_composer_installed
+
+- name: download composer installer
+  get_url:
+     url=https://getcomposer.org/installer
+    dest="/tmp/install-composer.php"
+    mode=644
+  when: php5_composer_installed.stat.exists == false
+
+- name: install composer
+  command: php /tmp/install-composer.php
+  args:
+    chdir: /tmp
+  when: php5_composer_installed.stat.exists == false
+
+- name: ensure directory exists for system wide installation
+  file:
+     path=/usr/local/bin
+    owner=root
+    group=root
+    state=directory
+  when: php5_composer_installed.stat.exists == false
+
+- name: make composer available system wide
+  command: mv /tmp/composer.phar /usr/local/bin/composer
+  when: php5_composer_installed.stat.exists == false
+
+# - name: assign execute permissions to composer
+#   file:
+#     path=/usr/local/bin/composer
+#     mode=0777
+#     state=file
+
+- name: remove composer installer
+  file:
+    path=/tmp/install-composer.php
+    state=absent
+  when: php5_composer_installed.stat.exists == false

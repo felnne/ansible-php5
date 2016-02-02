@@ -20,6 +20,7 @@ Installs and configures PHP 5 and selected extensions
 * Optionally, installs and enables the Multibyte (MBString) PHP extension, this is enabled by default
 * Optionally, installs and enables the PDO PHP extension, this is enabled by default
 * Optionally, installs, enables and configures the XDebug debugger extension, this is disabled by default
+* Optionally, installs the latest stable version of Composer, the PHP package manager, this is enabled by default
 
 ## Quality Assurance
 
@@ -381,6 +382,26 @@ Instead you will need to re-build any machines this role has been applied to.
 This is considered a limitation, but by intention and will not be addressed, see the *Limitations* section for more 
 information.
 
+### Composer
+
+[Composer](https://getcomposer.org/) is the *de-facto* package manager for PHP. Its use is similar to other language
+package managers such as Gem for Ruby, Pip for Python and NPM for NodeJS.
+
+Composer uses a `composer.json` to define project dependencies, which are then downloaded to a `vendors` directory and
+can be easily imported into a project using the bundled `autoload.php` file, which leverages the PSR-0 and PSR-4 
+autoloading standards. Dependency versions can be expressed using Semantic Versioning or with more direct identifiers.
+
+This role will install Composer as a locally available utility as it is considered best practice. This means to run
+`composer install` is as simple as:
+
+```shell
+$ cd /srv/project-containing-composer.json
+$ composer install
+```
+
+Though it is strongly encouraged to use Composer, if not desired it can be ignored and will not interfere with the use
+of PHP. Alternatively you can set the *php5_use_composer* variable to `false` to prevent its installation.
+
 ### Typical playbook
 
 ```yaml
@@ -575,6 +596,19 @@ Default: *See role defaults*
 * **MAY** be specified
 * Specifies whether the PDO PHP extension should be installed to interact with various databases
 * This variable is used as a 'feature flag' for whether tasks related to the PDO extension will be applied
+* See the *Usage* section for more information on this feature
+* Values **MUST** use one of these options, as determined by Ansible:
+  * `true`
+  * `false`
+* Values **SHOULD NOT** be quoted to prevent Ansible coercing values to a string
+* Where not specified, a value of `true` will be assumed
+* Default: `true`
+
+#### *php5_use_composer*
+
+* **MAY** be specified
+* Specifies whether the Composer PHP package manager should be installed to manage PHP project dependencies
+* This variable is used as a 'feature flag' for whether tasks related to Composer will be applied
 * See the *Usage* section for more information on this feature
 * Values **MUST** use one of these options, as determined by Ansible:
   * `true`

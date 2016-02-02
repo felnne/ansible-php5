@@ -1,0 +1,10 @@
+---
+# Tests the Composer PHP package manager is installed and is usable
+
+# Composer uses the same PHAR on CentOS and Ubuntu for non-system and system only package sources
+
+# Need to specify the path to composer as /usr/local/bin is not in the root users path on CentOS
+- name: get composer version
+  command: /usr/local/bin/composer --version
+  changed_when: false
+  register: php5_test_composer_version

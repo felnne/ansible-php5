@@ -48,6 +48,12 @@
     - BARC_INSTALL
     - BARC_INSTALL_PACKAGES
 
+- include: install-composer.yml
+  when: php5_use_composer == true
+  tags:
+    - BARC_INSTALL
+    - BARC_INSTALL_PACKAGES
+
 - include: configure-sapi-cli.yml
   tags:
     - BARC_CONFIGURE
