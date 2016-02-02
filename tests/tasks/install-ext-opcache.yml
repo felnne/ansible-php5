@@ -1,6 +1,8 @@
 ---
 # Tests the OpCache extension is installed
 
+# The OpCache extension is already enabled on Ubuntu when using non-system and system only package sources
+
 # If using non-system sources (preferred)
 
 - name: determine if OpCache extension package is installed from non-system sources - CentOS
@@ -16,8 +18,6 @@
   when: ansible_distribution == "CentOS" and
     (BARC_use_non_system_package_sources == true or BARC_use_non_system_package_sources == 'True')
 
-# The OpCache extension is already enabled on Ubuntu when using non-system package sources
-
 # If using system-sources only
 
 - name: determine if OpCache extension package is installed from system only sources - CentOS
@@ -32,5 +32,3 @@
       - "'php-pecl-zendopcache' in php5_test_fact_opcache_extension_is_installed_system_only_centos.stdout"
   when: ansible_distribution == "CentOS" and
     (BARC_use_non_system_package_sources == false or BARC_use_non_system_package_sources == 'False')
-
-# The OpCache extension is already enabled on Ubuntu when using system only package sources
