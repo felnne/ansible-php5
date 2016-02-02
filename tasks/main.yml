@@ -18,6 +18,12 @@
     - BARC_INSTALL
     - BARC_INSTALL_PACKAGES
 
+- include: install-ext-gmp.yml
+  when: php5_use_gmp == true
+  tags:
+    - BARC_INSTALL
+    - BARC_INSTALL_PACKAGES
+
 - include: install-ext-xdebug.yml
   when: php5_use_xdebug == true
   tags:

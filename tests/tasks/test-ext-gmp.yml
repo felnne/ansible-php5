@@ -1,0 +1,6 @@
+---
+# Tests if GMP extension is enabled
+
+- name: determine if GMP extension is enabled
+  shell: php -i | grep -q 'gmp support => enabled'
+  changed_when: False

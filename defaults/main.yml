@@ -48,6 +48,8 @@ php5_ext_opcache_options:
 
 php5_use_curl: true
 
+php5_use_gmp: true
+
 php5_use_xdebug: false
 php5_ext_xdebug_options:
   - section: "XDebug"

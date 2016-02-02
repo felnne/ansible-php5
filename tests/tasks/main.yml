@@ -15,6 +15,9 @@
 - include: install-ext-curl.yml
   when: php5_use_curl == true
 
+- include: install-ext-gmp.yml
+  when: php5_use_gmp == true
+
 - include: install-ext-xdebug.yml
   when: php5_use_xdebug == true
 
@@ -37,6 +40,9 @@
 
 - include: test-ext-curl.yml
   when: php5_use_curl == true
+
+- include: test-ext-gmp.yml
+  when: php5_use_gmp == true
 
 - include: test-ext-xdebug.yml
   when: php5_use_xdebug == true
