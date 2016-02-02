@@ -21,9 +21,6 @@ Installs and configures PHP 5 and selected extensions
 * Optionally, installs and enables the PDO PHP extension, this is enabled by default
 * Optionally, installs, enables and configures the XDebug debugger extension, this is disabled by default
 
-# TODO (Remove)
-
-
 ## Quality Assurance
 
 This role uses manual and automated testing to ensure the features offered by this role work as advertised. 
