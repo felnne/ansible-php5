@@ -18,6 +18,9 @@
 - include: install-ext-gmp.yml
   when: php5_use_gmp == true
 
+- include: install-ext-xsl.yml
+  when: php5_use_xsl == true
+
 - include: install-ext-xdebug.yml
   when: php5_use_xdebug == true
 
@@ -43,6 +46,9 @@
 
 - include: test-ext-gmp.yml
   when: php5_use_gmp == true
+
+- include: test-ext-xsl.yml
+  when: php5_use_xsl == true
 
 - include: test-ext-xdebug.yml
   when: php5_use_xdebug == true

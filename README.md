@@ -16,6 +16,7 @@ Installs and configures PHP 5 and selected extensions
 * Optionally, installs, enables and configures the Zend OpCache extension, this is enabled by default
 * Optionally, installs and enables the cURL PHP extension, this is enabled by default
 * Optionally, installs and enables the GMP PHP extension, this is enabled by default
+* Optionally, installs and enables the XSL PHP extension, this is enabled by default
 * Optionally, installs, enables and configures the XDebug debugger extension, this is disabled by default
 
 # TODO (Remove)
@@ -297,6 +298,22 @@ has been applied to.
 This is considered a limitation, but by intention and will not be addressed, see the *Limitations* section for more 
 information.
 
+#### XSL
+
+"The XSL extension implements the XSL standard, performing XSLT transformations using the libxslt library"
+
+Source: http://php.net/manual/en/book.xsl.php
+
+This extension is enabled by default - it is controlled by the *php5_use_xsl* variable.
+Currently this role does not configure options for this extension, however it is safe to do this outside this role.
+
+Note: If you enable this extension and then later choose to disable it, or where this extension is enabled by default,
+such as on CentOS, this role will not disable the extension. Instead you will need to re-build any machines this role 
+has been applied to.
+
+This is considered a limitation, but by intention and will not be addressed, see the *Limitations* section for more 
+information.
+
 #### XDebug
 
 "Xdebug is a PHP extension which provides debugging and profiling capabilities. It uses the DBGp debugging protocol."
@@ -485,6 +502,19 @@ Default: *See role defaults*
 * **MAY** be specified
 * Specifies whether the GMP PHP extension should be installed to support arbitrary precision arithmetic
 * This variable is used as a 'feature flag' for whether tasks related to the GMP extension will be applied
+* See the *Usage* section for more information on this feature
+* Values **MUST** use one of these options, as determined by Ansible:
+  * `true`
+  * `false`
+* Values **SHOULD NOT** be quoted to prevent Ansible coercing values to a string
+* Where not specified, a value of `true` will be assumed
+* Default: `true`
+
+#### *php5_use_xsl*
+
+* **MAY** be specified
+* Specifies whether the XLS PHP extension should be installed to support XSL transformations
+* This variable is used as a 'feature flag' for whether tasks related to the XSL extension will be applied
 * See the *Usage* section for more information on this feature
 * Values **MUST** use one of these options, as determined by Ansible:
   * `true`

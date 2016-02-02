@@ -1,0 +1,17 @@
+---
+# Tests the XSL extension is installed
+
+# The XSL extension is already enabled on CentOS when using non-system and system only package sources
+
+# The XSL extension uses the same package name on Ubuntu for non-system and system only package sources
+
+- name: determine if XSL extension package is installed - Ubuntu
+  command: dpkg -s php5-xsl
+  changed_when: False
+  register: php5_test_fact_xsl_extension_is_installed_ubuntu
+  when: ansible_distribution == "Ubuntu"
+- name: assert XSL extension package is installed
+  assert:
+    that:
+      - "'install ok installed' in php5_test_fact_xsl_extension_is_installed_ubuntu.stdout"
+  when: ansible_distribution == "Ubuntu"

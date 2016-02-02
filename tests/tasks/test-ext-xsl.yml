@@ -1,0 +1,6 @@
+---
+# Tests if the XSL extension is enabled
+
+- name: determine if XSL extension is enabled
+  shell: php -i | grep -q 'XSL => enabled'
+  changed_when: False

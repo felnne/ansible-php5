@@ -1,0 +1,16 @@
+---
+# Install XSL extension
+
+# The XSL extension is already enabled on CentOS when using non-system and system only package sources
+
+# The XSL extension uses the same package name on Ubuntu for non-system and system only package sources
+
+- name: install XSL extension - Ubuntu
+  apt:
+                 pkg={{ item }}
+        update_cache=yes
+    cache_valid_time=3600
+               state=present
+  with_items:
+    - php5-xsl
+  when: ansible_distribution == "Ubuntu"
