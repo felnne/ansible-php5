@@ -32,12 +32,6 @@
   command: mv /tmp/composer.phar /usr/local/bin/composer
   when: php5_composer_installed.stat.exists == false
 
-# - name: assign execute permissions to composer
-#   file:
-#     path=/usr/local/bin/composer
-#     mode=0777
-#     state=file
-
 - name: remove composer installer
   file:
     path=/tmp/install-composer.php
